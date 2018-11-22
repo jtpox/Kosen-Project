@@ -15,7 +15,8 @@
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.4",
-    "mongoose": "^5.3.12"
+    "mongoose": "^5.3.12",
+    "ws": "^6.1.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
