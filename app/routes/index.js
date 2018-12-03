@@ -1,7 +1,7 @@
+import Index from '../controllers/index';
+
 module.exports = (app) => {
-  app.get('/', (req, res) => {
-    res.json({
-      test: 1,
-    });
-  });
+  const index = new Index();
+
+  app.get('/', index.index);
 };

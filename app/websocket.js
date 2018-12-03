@@ -18,7 +18,8 @@ export default class Websocket {
       port: process.env.WS_PORT,
     });
   }
+
   incoming(msg) {
-    console.log('Received');
+    console.log(`Received ${msg}`);
   }
 }
