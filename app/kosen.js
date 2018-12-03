@@ -1,9 +1,18 @@
 import Fs from 'fs';
 
+import Exphbs from 'express-handlebars';
+
 export default class Kosen {
   constructor(express) {
     this.express = express;
     this.app = express();
+
+    /*
+     * Set template engine.
+     * https://github.com/ericf/express-handlebars
+     */
+    this.app.engine('handlebars', Exphbs({ defaultLayout: 'main' }));
+    this.app.set('view engine', 'handlebars');
 
     this.start();
   }
