@@ -7,13 +7,16 @@ export default class Websocket {
     this.ws = socket;
     this.server = null;
 
+    this.client = null;
+
     this.start();
     this.server.on('connection', (ws) => {
+      this.client = ws;
       ws.on('message', this.incoming);
     });
   }
 
-  async start() {
+  start() {
     this.server = new this.ws.Server({
       port: process.env.WS_PORT,
     });
