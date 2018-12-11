@@ -66,7 +66,8 @@
             
             //Set new markers.
             var data = JSON.parse(msg.data);
-            console.log(data);
+            console.log('Received update from server.');
+            // console.log(data);
             if (data.broadcast && data.broadcast === "map") {
                 for (var i = 0; i < data.data.length; i++) {
                     var latlng = new google.maps.LatLng(data.data[i].lat, data.data[i].lon);
