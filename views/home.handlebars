@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="css/kosen.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+    <title>Kosen Project</title>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="#">Kosen</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="main-nav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active"><a href="#" class="nav-link"><i class="fas fa-home"></i></a></li>
+            </ul>
+
+            <span>
+                <a href="#" class="btn btn-primary">Buy</a>
+            </span>
+        </div>
+    </nav>
+
+    <div class="wrapper">
+        <div id="map"></div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script>
+    var markers = [];
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 12,
+            center: new google.maps.LatLng(1.3521, 103.8198),
+            mapTypeId: 'terrain'
+        });
+
+        window.WebSocket = window.WebSocket || window.MoxWebSocket;
+        var connection = new WebSocket('ws://localhost:8081');
+        connection.onopen = function() {
+            console.log('Connection established.');
+            connection.send(JSON.stringify({
+                request: 'map',
+            }));
+        };
+
+        connection.onerror = function() {
+            console.log('Error trying to connect to server.');
+        };
+
+        connection.onmessage = function(msg) {
+            setMap(null) // Clear all markers.
+            markers = [];
+            
+            //Set new markers.
+            var data = JSON.parse(msg.data);
+            console.log(data);
+            if (data.broadcast && data.broadcast === "map") {
+                for (var i = 0; i < data.data.length; i++) {
+                    var latlng = new google.maps.LatLng(data.data[i].lat, data.data[i].lon);
+                    console.log(latlng);
+                    markers.push(new google.maps.Marker({
+                        position: latlng,
+                        map: map,
+                    }));
+                }
+            }
+            setMap(map);
+        };
+    }
+
+    function setMap(map) {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(map);
+        }
+    }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_flPWLTze0Qw10KsAqKnQ8xP6jA10k00&callback=initMap"
+    type="text/javascript"></script>
+</body>
+</html>

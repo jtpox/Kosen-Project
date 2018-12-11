@@ -20,19 +20,19 @@ export default class Websocket {
 
     this.server.on('connection', (ws) => {
       ws.on('message', (msg) => {
-        this.incoming(this.server, ws, msg);
+        this.incoming(ws, msg);
       });
     });
   }
 
-  incoming(server, ws, msg) {
+  incoming(ws, msg) {
     const message = JSON.parse(msg);
     // console.log(`./controllers/socket/${message.request}.js`);
     /*
      * Check if request exists in the controllers folder.
      */
     if (Fs.existsSync(`./app/controllers/socket/${message.request}.js`)) {
-      const run = require(`./controllers/socket/${message.request}`)(server, ws, message); // Requires Websocket instance and message object.
+      const run = require(`./controllers/socket/${message.request}`)(this.server, ws, message); // Requires Websocket instance and message object.
     } else {
       ws.send(JSON.stringify({
         error: 1,

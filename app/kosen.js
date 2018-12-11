@@ -11,7 +11,8 @@ export default class Kosen {
      * Set template engine.
      * https://github.com/ericf/express-handlebars
      */
-    this.app.engine('handlebars', Exphbs({ defaultLayout: 'main' }));
+    // this.app.engine('handlebars', Exphbs({ defaultLayout: 'main' }));
+    this.app.engine('handlebars', Exphbs.create().engine);
     this.app.set('view engine', 'handlebars');
 
     this.start();

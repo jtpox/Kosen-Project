@@ -1,0 +1,19 @@
+@import "bootstrap";
+@import "_variables";
+
+$input-btn-border-width: 0;
+$btn-border-width: 0;
+
+html, body {
+    height: 100%;
+}
+
+.wrapper {
+    height: 100%;
+    /* Margin & Padding */
+    padding-top: 50px;
+}
+
+#map {
+    height: 100%;
+}

@@ -21,7 +21,8 @@ class Update {
     try {
       if (await Auth.isLogged(this.msg.device, this.msg.auth) && this.msg.lat && this.msg.lon) {
 
-        Gps.find({ device: this.msg.device }).remove().exec(); // Remove previous location.
+        // Gps.find({ device: this.msg.device }).remove().exec(); // Remove previous location.
+        await Gps.deleteMany({ device: this.msg.device });
 
         const gps = await new Gps({
           device: this.msg.device,
@@ -30,6 +31,8 @@ class Update {
         }).save();
 
         this.ws.send(Return.success);
+
+        // Broadcast updated data set to the website's map.
         await this.broadcast();
       } else {
         this.ws.send(Return.error);
@@ -47,7 +50,7 @@ class Update {
 
       this.server.clients.forEach((client) => {
         client.send(JSON.stringify({
-          broadcast: 'site',
+          broadcast: 'map',
           data: gps,
         }));
       });
