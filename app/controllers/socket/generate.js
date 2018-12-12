@@ -37,7 +37,7 @@ class Generate {
         auth_token: token,
       }));
     } catch (err) {
-      this.ws.send(Return.error);
+      this.ws.send(JSON.stringify(Return.error));
     }
   }
 }

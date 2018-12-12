@@ -30,16 +30,16 @@ class Update {
           lon: this.msg.lon,
         }).save();
 
-        this.ws.send(Return.success);
+        this.ws.send(JSON.stringify(Return.success));
 
         // Broadcast updated data set to the website's map.
         await this.broadcast();
       } else {
-        this.ws.send(Return.error);
+        this.ws.send(JSON.stringify(Return.error));
       }
     } catch (err) {
       // console.log(err);
-      this.ws.send(Return.error);
+      this.ws.send(JSON.stringify(Return.error));
     }
   }
 

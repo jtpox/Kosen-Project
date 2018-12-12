@@ -1,8 +1,8 @@
 module.exports = {
-  error: JSON.stringify({
+  error: {
     error: 1,
-  }),
-  success: JSON.stringify({
+  },
+  success: {
     error: 0,
-  }),
+  },
 };
