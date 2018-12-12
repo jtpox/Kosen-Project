@@ -1,6 +1,5 @@
 import Fs from 'fs';
 
-
 /*
   * https://github.com/websockets/ws
  */
@@ -32,7 +31,8 @@ export default class Websocket {
      * Check if request exists in the controllers folder.
      */
     if (Fs.existsSync(`./app/controllers/socket/${message.request}.js`)) {
-      const run = require(`./controllers/socket/${message.request}`)(this.server, ws, message); // Requires Websocket instance and message object.
+      let run = require(`./controllers/socket/${message.request}`)(this.server, ws, message); // Requires Websocket instance and message object.
+      run = null;
     } else {
       ws.send(JSON.stringify({
         error: 1,

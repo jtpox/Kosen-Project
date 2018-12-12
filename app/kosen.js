@@ -21,6 +21,7 @@ export default class Kosen {
     this.app.use(BodyParser.urlencoded({ extended: true }));
     this.app.use(BodyParser.json());
 
+    this.setHeaders();
     this.start();
   }
 
@@ -31,13 +32,11 @@ export default class Kosen {
       res.header('Access-Control-Allow-Credentials', 'true');
       res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
       res.header('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authentication');
-      
       next();
     });
   }
 
   async start() {
-    this.setHeaders();
     this.loadRoutes();
 
     this.app.use(this.express.static('public'));

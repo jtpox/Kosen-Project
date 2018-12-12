@@ -27,6 +27,7 @@ function initMap() {
 
     //Set new markers.
     const data = JSON.parse(msg.data);
+    // console.log(data);
     console.log('Received update from server.');
     // console.log(data);
     if (data.broadcast && data.broadcast === 'map') {

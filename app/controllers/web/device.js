@@ -2,7 +2,7 @@ import Return from '../../return';
 
 import Device from '../../models/device';
 
-import Gps from '../../models/Gps';
+import Gps from '../../models/gps';
 
 export default class Index {
   /*
@@ -21,7 +21,7 @@ export default class Index {
       res.json({
         error: 1,
         message: `${err}`,
-      })
+      });
     }
   }
 
